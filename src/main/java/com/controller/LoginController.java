@@ -3,6 +3,9 @@ package com.controller;
 import com.entity.Login;
 import com.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +24,10 @@ public class LoginController {
 	
 	@GetMapping(value = "login")
 	public String loginPage(Login login,Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
+			return "redirect:/home";  // Redirect to a post-login page if already logged in
+		}
 		model.addAttribute("login", login);
 		return "index1";
 	}

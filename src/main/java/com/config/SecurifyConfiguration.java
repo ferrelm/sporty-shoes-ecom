@@ -21,7 +21,7 @@ public class SecurifyConfiguration {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-		
+
 		return httpSecurity.
 				csrf(csrf->csrf.disable()).
 				authorizeHttpRequests(auth-> {
@@ -43,24 +43,15 @@ public class SecurifyConfiguration {
 					.permitAll())
 			.build();
 	}
-	
-//	@Bean UserDetailsService userDetails() {
-//		UserDetails normalUser = 
-//		User.builder().username("akash").password(passwordEncoder().encode("123")).roles("USER").build();
-//		UserDetails adminUser = 
-//		User.builder().username("admin").password(passwordEncoder().encode("456")).roles("ADMIN","USER").build();
-//		return new InMemoryUserDetailsManager(normalUser,adminUser);
-//	}
-	
-	
-	@Autowired 
-	LoginService loginService;			// it is a type of UserDetailsService 
-	
+
+	@Autowired
+	LoginService loginService;			// it is a type of UserDetailsService
+
 	@Bean
 	public UserDetailsService userDetailService() {
 		return loginService;
 	}
-	
+
 	// it is used to connect spring security with DAO layer
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
@@ -74,7 +65,7 @@ public class SecurifyConfiguration {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 }
 
 

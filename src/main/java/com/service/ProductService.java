@@ -5,6 +5,7 @@ import com.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,7 +74,10 @@ public class ProductService {
 		public List<Object[]> orderDetails() {
 			return productRepository.orderDetails();		// custom methods 
 		}
-		
+
+	public List<Object[]> listOrders(String category, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+		return productRepository.listOrders(category, startDateTime, endDateTime);		// custom methods
+	}
 		
 }
 

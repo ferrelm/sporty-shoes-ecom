@@ -1,13 +1,70 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Insert title here</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <title>Insert title here</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous" />
 </head>
 <body>
-<h2>User can access</h2>
-<a href="/logout">Logout</a>
-</body>
+<div class="container">
+    <span th:text="${msg}" style="color:red;"></span>
 
+    <!-- Show only to authenticated users -->
+    <!--div sec:authorize="isAuthenticated()"-->
+        <h2><span sec:authentication="name">User</span> Welcome to User Dashboard</h2>
+    <!-- h2>Welcome to User Dashboard!</h2 -->
+    <table border="1" class="table">
+        <tr>
+            <th>PId</th>
+            <th>PName</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Order</th>
+        </tr>
+
+        <tr th:each="p:${products}">
+            <td th:text="${p.pid}"></td>
+            <td th:text="${p.pname}"></td>
+            <td th:text="${p.price}"></td>
+            <td th:text="${p.category}"></td>
+
+            <th><a th:href="@{orderPlace(pid=${p.pid})}">
+                <img src="data:image/png;base64,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"
+                     width="30px"
+                     height="30px"
+                />
+            </a></th>
+
+
+        </tr>
+
+    </table>
+
+    <hr/>
+    <h4>Order Details</h4>
+    <table border="1" class="table">
+        <tr>
+            <th>PName</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>OrderId</th>
+            <th>OrderDateAndTime</th>
+        </tr>
+        <tr th:each="od:${orderdetails}">
+            <td th:text="${od[0]}"></td>
+            <td th:text="${od[1]}"></td>
+            <td th:text="${od[2]}"></td>
+            <td th:text="${od[3]}"></td>
+            <td th:text="${od[4]}"></td>
+        </tr>
+    </table>
+    </div>
+</div>
+</body>
 </html>
