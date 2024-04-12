@@ -1,6 +1,7 @@
 package com.service;
 
 import com.entity.Login;
+import com.entity.Product;
 import com.repository.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,7 +18,11 @@ public class LoginService implements UserDetailsService{
 	
 	@Autowired
 	LoginRepository loginRepository;
-	
+
+	public List<Login> findAllUsers() {
+		return loginRepository.findAll();		// select * from user in SQL
+	}											// select u from User u in HQL/JPQL
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<Login> result = loginRepository.findUserByName(username);

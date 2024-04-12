@@ -13,4 +13,5 @@ public interface LoginRepository extends JpaRepository<Login, Integer>{
 
 	@Query("select l from Login l where l.username = :username")
 	public Optional<Login> findUserByName(@Param("username") String username);
+
 }
