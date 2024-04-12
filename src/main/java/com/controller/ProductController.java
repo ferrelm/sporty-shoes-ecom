@@ -1,11 +1,16 @@
 package com.controller;
 
+import com.entity.Login;
 import com.entity.Orders;
 import com.entity.Product;
+import com.repository.LoginRepository;
 import com.service.OrdersService;
 import com.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +22,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 //@RequestMapping("admin")
 public class ProductController {
+
+	@Autowired
+	LoginRepository loginRepository;
 
 	@Autowired
 	ProductService productService;
@@ -180,6 +189,25 @@ public class ProductController {
 	public String placeOrder(Model model, HttpServletRequest req, Orders order,Product product) {
 		int pid = Integer.parseInt(req.getParameter("pid"));
 		order.setPid(pid);
+
+		// Retrieve the currently authenticated user from the Spring Security Context
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.isAuthenticated()) {
+			// Assuming the principal stored in the authentication object is of type 'Login'
+			if (authentication.getPrincipal() instanceof UserDetails) {
+				String username = ((UserDetails) authentication.getPrincipal()).getUsername();
+				// Assuming you have a service to fetch Login object by username
+				Optional<Login> login = loginRepository.findUserByName(username);
+				if (login.isPresent()) {
+					// Set the Login object if it is present
+					order.setLogin(login.get());
+				}
+			} else if (authentication.getPrincipal() instanceof Login) {
+				// Directly use it if the principal itself is the Login object
+				order.setLogin((Login) authentication.getPrincipal());
+			}
+		}
+
 		String name="Store Product"; 
 		String result = ordersService.placeOrder(order);
 		List<Product> listOfProduct = productService.findAllProducts();

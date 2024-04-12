@@ -17,7 +17,7 @@
 
     <!-- Show only to authenticated users -->
     <!--div sec:authorize="isAuthenticated()"-->
-        <h2><span sec:authentication="name">User</span> Welcome to User Dashboard</h2>
+        <h2><span sec:authentication="name">User</span> Welcome to Customer Dashboard</h2>
     <!-- h2>Welcome to User Dashboard!</h2 -->
     <table border="1" class="table">
         <tr>
@@ -64,9 +64,9 @@
             <td th:text="${od[4]}"></td>
         </tr>
     </table>
+    <h2>User logout</h2>
+    <a href="/logout">Logout</a>
     </div>
-<h2>User logout</h2>
-<a href="/logout">Logout</a>
 </div>
 </body>
 </html>

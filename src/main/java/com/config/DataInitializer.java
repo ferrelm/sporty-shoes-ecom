@@ -23,7 +23,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     public void onApplicationEvent(ContextRefreshedEvent event) {
         // Use the method findUserByName to check if the admin user already exists
         Optional<Login> admin = loginRepository.findUserByName("admin");
-        if (!admin.isPresent()) {  // Check if the admin user does not exist
+        if (admin.isEmpty()) {  // Check if the admin user does not exist
             // Assuming the Login entity requires a username, password, and roles at minimum
             Login newAdmin = new Login();
             newAdmin.setUsername("admin");
