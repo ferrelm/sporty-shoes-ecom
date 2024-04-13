@@ -10,6 +10,14 @@
 
 <h2>Only Admin can access</h2>
 
+    <h4>Search Users by Username</h4>
+    <form action="#" th:action="@{admin/getUser}" method="get" th:object="${userSearch}" class="form-group">
+        <input type="text" name="username" th:field="*{username}" class="form-control"/><br/>
+        <input type="submit" th:value="${buttonUser}" name="b1" class="btn btn-success"/>
+        <input type="reset" value="reset" class="btn btn-info"/>
+    </form>
+    <hr/>
+
     <table border="1" class="table">
         <tr>
             <th>Username</th>

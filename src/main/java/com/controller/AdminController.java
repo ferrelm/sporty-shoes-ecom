@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("admin")
@@ -27,17 +29,6 @@ public class AdminController {
 
 	@Autowired
 	ProductService productService;
-
-	@GetMapping(value = "/getUsers")
-	public String open(Model model) {
-
-		List<Login> listOfUsers = loginService.findAllUsers();
-
-		model.addAttribute("users", listOfUsers);
-
-		System.out.println(listOfUsers);
-		return "registeredUsers";
-	}
 
 	@GetMapping(value = "")
 	public String open(Model model, Product product) {
@@ -148,6 +139,34 @@ public class AdminController {
 		model.addAttribute("buttonOrder", "Search Order");
 
 		return "admin";
+	}
+
+	@GetMapping(value = "/listUsers")
+	public String listUsers(Model model) {
+
+		List<Login> listOfUsers = loginService.findAllUsers();
+
+		model.addAttribute("users", listOfUsers);
+
+		System.out.println(listOfUsers);
+		return "registeredUsers";
+	}
+
+	@GetMapping(value = "/searchUser")
+	public String showSearchUserForm(Model model) {
+		model.addAttribute("userSearch", new Login());  // Note: 'userSearch' used instead of 'users'
+		model.addAttribute("buttonUser", "Search User");
+		return "searchUser";  // name of the HTML file
+	}
+
+	@GetMapping(value = "/getUser")
+	public String getUser(Model model, @RequestParam String username) {
+		Optional<Login> userOptional = loginService.findByUsername(username);
+		List<Login> users = new ArrayList<>();
+		userOptional.ifPresent(users::add); // Only add if present
+
+		model.addAttribute("users", users); // Pass list whether empty or containing a single user
+		return "registeredUsers";
 	}
 
 }
