@@ -19,6 +19,7 @@ public class Product {
 	private String pname;
 	private float price;
 	private String category;
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pid")				// Link to FK
 	private List<Orders> listOfOrders;

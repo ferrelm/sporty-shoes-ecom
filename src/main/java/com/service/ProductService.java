@@ -21,20 +21,17 @@ public class ProductService {
 	
 	
 	public String storeProduct(Product product) {
-		
-	Optional<Product> result=productRepository.findById(product.getPid());
-	
-	if(result.isPresent()) {
-		return "Product id must be unique";
-	}else {
-		productRepository.save(product);
-		return "Product record stored successfully";
-	}
+		Optional<Product> result=productRepository.findById(product.getPid());
+		if(result.isPresent()) {
+			return "Product id must be unique";
+		}else {
+			productRepository.save(product);
+			return "Product record stored successfully";
+		}
 	
 	}
 	
 	public String deleteProduct(int pid) {
-		
 		System.out.println("product id is "+pid);
 		Optional<Product> result=productRepository.findById(pid);
 		if(result.isPresent()) {
@@ -44,10 +41,9 @@ public class ProductService {
 		}else {
 			return "Product record not present";
 		}
-		}
+	}
 	
 	public Product searchProductById(int pid) {
-		
 		Optional<Product> result=productRepository.findById(pid);
 		if(result.isPresent()) {
 			Product product = result.get();
@@ -58,22 +54,25 @@ public class ProductService {
 	}
 	
 		public String updateProduct(Product product) {
-			Optional<Product> result=productRepository.findById(product.getPid());	
-
-		if(result.isPresent()) {
-			Product p = result.get();
-			p.setPname(product.getPname());
-			p.setPrice(product.getPrice());
-			productRepository.saveAndFlush(p);
-			return "Product updated successfully";
-		}else {
-			return "Product record not present";
-		}
+			Optional<Product> result=productRepository.findById(product.getPid());
+			if(result.isPresent()) {
+				Product p = result.get();
+				p.setPname(product.getPname());
+				p.setPrice(product.getPrice());
+				productRepository.saveAndFlush(p);
+				return "Product updated successfully";
+			}else {
+				return "Product record not present";
+			}
 		}
 		
 		public List<Object[]> orderDetails() {
 			return productRepository.orderDetails();		// custom methods 
 		}
+
+	public List<Object[]> orderDetailsByUser(String username) {
+		return productRepository.orderDetailsByUser(username);		// custom methods
+	}
 
 	public List<Object[]> listOrders(String category, LocalDateTime startDateTime, LocalDateTime endDateTime) {
 		return productRepository.listOrders(category, startDateTime, endDateTime);		// custom methods

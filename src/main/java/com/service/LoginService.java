@@ -1,7 +1,6 @@
 package com.service;
 
 import com.entity.Login;
-import com.entity.Product;
 import com.repository.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -32,7 +31,11 @@ public class LoginService implements UserDetailsService{
 		}	else {
 			throw new UsernameNotFoundException(username);
 		}
+	}
 
+	public Optional<Login> findByUsername(String username) {
+		Optional<Login> result = loginRepository.findUserByName(username);
+		return result;
 	}
 
 	public String[] getRoles(Login ll) {
@@ -51,6 +54,10 @@ public class LoginService implements UserDetailsService{
 			loginRepository.save(ll);
 			return "Account created successfully";
 		}
-		
 	}
+
+	public void updateAccount(Login login) {
+		loginRepository.save(login);
+	}
+
 }

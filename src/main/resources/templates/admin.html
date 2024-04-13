@@ -12,7 +12,7 @@
     <span th:text="${msg}" style="color:red;"></span>
 
     <h2>Welcome to Admin Dashboard!</h2>
-    <form action="#" th:action="@{/addProduct}" method="post" th:object="${product}" class="form-group">
+    <form action="#" th:action="@{addProduct}" method="post" th:object="${product}" class="form-group">
         <label>PId</label>
         <input type="number" name="pid" th:field="*{pid}" class="form-control"/><br/>
         <label>PName</label>
@@ -21,11 +21,10 @@
         <input type="number" name="price" th:field="*{price}" class="form-control"/><br/>
         <label>Category</label>
         <input type="text" name="category" th:field="*{category}" class="form-control"/><br/>
-        <input type="submit" th:value="${buttonValue1}" name="b1" class="btn btn-success"/>
+        <input type="submit" th:value="${buttonProduct}" name="b1" class="btn btn-success"/>
         <input type="reset" value="reset" class="btn btn-info"/>
     </form>
     <hr/>
-
 
     <table border="1" class="table">
         <tr>
@@ -59,12 +58,12 @@
         </tr>
     </table>
 
-    <h2>Search Orders</h2>
-    <form action="#" th:action="@{/listOrders}" method="get" th:object="${product}" class="form-group">
+    <h4>Search Orders by Category and date interval</h4>
+    <form action="#" th:action="@{admin/listOrders}" method="get" th:object="${product}" class="form-group">
         <input type="text" name="category" th:field="*{category}" class="form-control"/><br/>
         <input type="datetime-local" name="startDate" required>
         <input type="datetime-local" name="endDate" required><br/><br/>
-        <input type="submit" th:value="${buttonValue2}" name="b1" class="btn btn-success"/>
+        <input type="submit" th:value="${buttonOrder}" name="b2" class="btn btn-success"/>
         <input type="reset" value="reset" class="btn btn-info"/>
     </form>
     <hr/>
@@ -72,11 +71,11 @@
     <h4>Order Details</h4>
     <table border="1" class="table">
         <tr>
+            <th>OrderId</th>
             <th>Customer</th>
             <th>PName</th>
             <th>Price</th>
             <th>Category</th>
-            <th>OrderId</th>
             <th>OrderDateAndTime</th>
         </tr>
         <tr th:each="od:${orderdetails}">
@@ -89,8 +88,29 @@
         </tr>
     </table>
 
-    <h2>Admin logout</h2>
-    <a href="/logout">Logout</a>
+    <h4>List of Users</h4>
+    <table border="1" class="table">
+        <tr>
+            <th>Username</th>
+            <th>Role</th>
+        </tr>
+        <tr th:each="u:${users}">
+            <td th:text="${u.username}"></td>
+            <td th:text="${u.role}"></td>
+        </tr>
+    </table>
+
+    <h4>Change Password</h4>
+    <form action="/changePasswordForm" method="get">
+        <button type="submit" class="btn-link-style">Change Password</button>
+    </form>
+    <!--a href="/changePasswordForm">changePassword</a-->
+
+    <h4>Admin logout</h4>
+    <form action="/logout" method="get">
+        <button type="submit" class="btn-link-style">Logout</button>
+    </form>
+    <!--a href="/logout">Logout</a-->
 
 </div>
 </body>
