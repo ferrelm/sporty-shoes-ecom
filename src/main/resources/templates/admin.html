@@ -58,7 +58,7 @@
         </tr>
     </table>
 
-    <h4>Search Orders by Category and date interval</h4>
+    <h4>Search Orders by Category and Date Interval</h4>
     <form action="#" th:action="@{admin/listOrders}" method="get" th:object="${product}" class="form-group">
         <input type="text" name="category" th:field="*{category}" class="form-control"/><br/>
         <input type="datetime-local" name="startDate" required>
