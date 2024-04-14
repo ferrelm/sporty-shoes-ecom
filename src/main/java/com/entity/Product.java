@@ -19,6 +19,7 @@ public class Product {
 	private String pname;
 	private float price;
 	private String category;
+	private int quantity;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pid")				// Link to FK
@@ -59,9 +60,16 @@ public class Product {
 		this.category = category;
 	}
 
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
 	@Override
 	public String toString() {
-		return "Product [pid=" + pid + ", pname=" + pname + ", price=" + price + ", category=" + category + ", listOfOrders=" + listOfOrders + "]";
+		return "Product [pid=" + pid + ", pname=" + pname + ", price=" + price + ", category=" + category +", quantity=" + quantity + ", listOfOrders=" + listOfOrders + "]";
 	}
 
 }
