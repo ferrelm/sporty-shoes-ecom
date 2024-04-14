@@ -9,11 +9,11 @@ import com.repository.LoginRepository;
 import java.util.Optional;
 
 @Service
-public class UserDetailsService {
+public class UserDetailsManager {
 
     private final LoginRepository loginRepository;
 
-    public UserDetailsService(LoginRepository loginRepository) {
+    public UserDetailsManager(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
     }
 
