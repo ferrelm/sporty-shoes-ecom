@@ -25,6 +25,7 @@ public class ProductService {
 		if(result.isPresent()) {
 			return "Product id must be unique";
 		}else {
+			//product.setQuantity(product.getQuantity());
 			productRepository.save(product);
 			return "Product record stored successfully";
 		}
@@ -56,10 +57,12 @@ public class ProductService {
 		public String updateProduct(Product product) {
 			Optional<Product> result=productRepository.findById(product.getPid());
 			if(result.isPresent()) {
-				Product p = result.get();
-				p.setPname(product.getPname());
-				p.setPrice(product.getPrice());
-				productRepository.saveAndFlush(p);
+				Product existingProduct = result.get();
+				existingProduct.setPname(product.getPname());
+				existingProduct.setPrice(product.getPrice());
+				existingProduct.setCategory(product.getCategory());
+				existingProduct.setQuantity(product.getQuantity());
+				productRepository.saveAndFlush(existingProduct);
 				return "Product updated successfully";
 			}else {
 				return "Product record not present";
