@@ -12,7 +12,7 @@
     <span th:text="${msg}" style="color:red;"></span>
 
     <h2>Welcome to Admin Dashboard!</h2>
-    <form action="#" th:action="@{addProduct}" method="post" th:object="${product}" class="form-group">
+    <form action="#" th:action="@{admin/addProduct}" method="post" th:object="${product}" class="form-group">
         <label>PId</label>
         <input type="number" name="pid" th:field="*{pid}" class="form-control"/><br/>
         <label>PName</label>
