@@ -47,7 +47,7 @@ public class LoginController {
 	}
 
 	@PostMapping(value = "signupindb")
-	public String signUpIntoDb(Login login, Model model) {
+	public String signUpIntoDb(Login login) {
 		login.setPassword(passwordEncoder.encode(login.getPassword()));
 		String result = loginService.createAccount(login);
 		System.out.println(result);
