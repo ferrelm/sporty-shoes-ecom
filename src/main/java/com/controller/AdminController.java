@@ -3,12 +3,14 @@ package com.controller;
 import com.entity.Login;
 import com.entity.Orders;
 import com.entity.Product;
+import com.exception.ProductNotFoundException;
 import com.service.LoginService;
 import com.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -106,6 +108,10 @@ public class AdminController {
 		int pid = Integer.parseInt(req.getParameter("pid"));
 
 		Product product = productService.searchProductById(pid);
+		if (product == null) {
+			throw new ProductNotFoundException("Product with ID " + pid + " not found.");
+		}
+
 		List<Product> listOfProduct = productService.findAllProducts();
 		List<Object[]> orderdetails = productService.orderDetails();
 		List<Login> listOfUsers = loginService.findAllUsers();
@@ -169,4 +175,17 @@ public class AdminController {
 		return "registeredUsers";
 	}
 
+	// Local exception handler within a controller
+	@ExceptionHandler(RuntimeException.class)
+	public String handleRuntimeException(RuntimeException ex, Model model) {
+		model.addAttribute("errMsg", "Runtime error in Admin operations: " + ex.getMessage());
+		return "adminErrorPage";  // Specific error page for admin controller
+	}
+
+	// In ControllerAdvice or Controller
+	@ExceptionHandler(ProductNotFoundException.class)
+	public String handleProductNotFoundException(ProductNotFoundException ex, Model model) {
+		model.addAttribute("errMsg", ex.getMessage());
+		return "productNotFoundPage";
+	}
 }
