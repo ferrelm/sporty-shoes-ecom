@@ -6,7 +6,12 @@ import com.entity.Product;
 import com.exception.ProductNotFoundException;
 import com.service.LoginService;
 import com.service.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +37,9 @@ public class AdminController {
 	@Autowired
 	ProductService productService;
 
+	@Operation(summary = "Get an example")
+	@ApiResponse(responseCode = "200", description = "Successful retrieval",
+		content = @Content(mediaType = "application/json"))
 	@GetMapping(value = "")
 	public String open(Model model, Product product) {
 

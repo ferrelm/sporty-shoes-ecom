@@ -4,14 +4,17 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
+//import org.springframework.boot.test.context.SpringBootTest;
 
 import com.entity.Product;
 import com.repository.ProductRepository;
 
-@SpringBootTest
+//@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
 
     @Mock
