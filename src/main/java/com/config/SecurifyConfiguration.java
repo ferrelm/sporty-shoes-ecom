@@ -23,7 +23,7 @@ public class SecurifyConfiguration {
 		return httpSecurity.
 				csrf(csrf->csrf.disable())
             .authorizeHttpRequests(auth -> auth
-							.requestMatchers("sporty-shoes", "home", "signup", "signupindb", "changePassword").permitAll()
+							.requestMatchers("signup", "signupindb", "changePassword", "/sporty-shoes/**", "api-docs").permitAll()
 							.requestMatchers("/user/**").hasRole("USER")
 							.requestMatchers("/admin/**").hasRole("ADMIN")
 							.anyRequest().authenticated())
